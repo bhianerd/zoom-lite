@@ -2,18 +2,12 @@ import React from 'react';
 import imgToAscii from '../../util/imgToAscii';
 import image2 from '../../img/pngImg.png';
 
-let image = () => {
-    let img = new imgToAscii('../../pngImg.jpg');
-    return img.display();
-}
+let ele = new imgToAscii(image2);
 
 function ImageToAsciiContainer() {
-    return(
+    return (
         <div className="ascii-image-container">
-            {/* 
-                <img src={image2}></img> 
-            */}
-            
+            {ele.display()}
             <img src={image2}></img>
         </div>
     );
