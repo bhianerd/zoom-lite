@@ -4,15 +4,10 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
-import Webcam from "react-webcam";
-
-const WebcamComponent = () => <Webcam />;
-
 ReactDOM.render(
-  //<React.StrictMode>
-  //  <App />
-  //</React.StrictMode>,
-  <Webcam />,
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>,
   document.getElementById('root')
 );
 
