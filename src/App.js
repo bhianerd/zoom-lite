@@ -9,7 +9,7 @@ function App() {
         <Webcam />
       </div>
       <div className="imgtoAscii">
-        <ImageToAsciiContainer />
+        {/* <ImageToAsciiContainer /> */}
         <WebcamStreamCapture />
       </div>
     </div>
