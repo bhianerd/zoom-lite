@@ -1,8 +1,7 @@
 import { React, useRef, useState, useCallback } from "react";
 import Webcam from "react-webcam";
 import imgToAscii from "../../util/imgToAscii";
-import asciiImage from '../../img/man.jpeg';
-
+import ImageToAsciiContainer from "../../components/ImageToAscii/ImageToAsciiContainer";
 
 const videoConstraints = {
   width: 240,
@@ -11,6 +10,7 @@ const videoConstraints = {
 
 const WebcamStreamCapture = () => {
   const webcamRef = useRef(null);
+  const [image, setImage] = useState('');
   const [screenShot, setScreenShot] = useState(null);
 
   const capture = useCallback(
@@ -21,14 +21,12 @@ const WebcamStreamCapture = () => {
       setInterval(async () => {
           var image = new Image();
           image.src = webcamRef.current.getScreenshot();
-          console.log(webcamRef.current.getScreenshot());
-          // console.log(webcamRef.current.getScreenshot());
           const asciiImageData = new imgToAscii(webcamRef.current.getScreenshot(), 0.1);
-          await asciiImageData.displayOnlyString();
+          setImage(await asciiImageData.displayOnlyString());
 
         }, 100);
     },
-    [screenShot]
+    [screenShot,setImage]
   );
 
   return (
@@ -42,6 +40,7 @@ const WebcamStreamCapture = () => {
         videoConstraints={videoConstraints}
       />
       <button onClick={capture}>Capture photo</button>
+      <ImageToAsciiContainer image={image}/>
     </>
   );
 };

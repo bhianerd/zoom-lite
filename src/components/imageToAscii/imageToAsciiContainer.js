@@ -1,12 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import imgToAscii from '../../util/imgToAscii';
-import asciiImage from '../../img/man.jpeg';
 
 
-function ImageToAsciiContainer() {
-    const [image, setImage] = useState('');
+function ImageToAsciiContainer(props) {
 
-    useEffect(() => {
+    /*useEffect(() => {
         const fetchImage = async () => {
             try {
                 const asciiImageData =  await new imgToAscii(asciiImage, 0.1);
@@ -18,11 +15,11 @@ function ImageToAsciiContainer() {
             }
         }
         fetchImage()
-    }, []);
+    }, []);*/
 
     return (
         <div className="ascii-image-container">
-            <p>{image}</p>
+            <pre>{props.image}</pre>
         </div>
     )
 }

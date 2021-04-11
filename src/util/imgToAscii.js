@@ -80,7 +80,6 @@ class imgToAscii {
 
 	async displayOnlyString() {
 		await this.loadImage;
-		console.log(this.string);
 		return this.string;
 	}
 
