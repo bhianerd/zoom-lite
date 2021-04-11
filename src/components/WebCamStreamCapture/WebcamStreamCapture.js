@@ -23,10 +23,10 @@ const WebcamStreamCapture = () => {
           image.src = webcamRef.current.getScreenshot();
           console.log(webcamRef.current.getScreenshot());
           // console.log(webcamRef.current.getScreenshot());
-          const asciiImageData =  await new imgToAscii(image, 0.1);
+          const asciiImageData = new imgToAscii(webcamRef.current.getScreenshot(), 0.1);
           await asciiImageData.displayOnlyString();
 
-        }, 2000);
+        }, 100);
     },
     [screenShot]
   );
