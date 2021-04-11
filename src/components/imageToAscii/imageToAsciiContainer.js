@@ -1,22 +1,30 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import imgToAscii from '../../util/imgToAscii';
-import image2 from '../../img/pngImg.png';
+import asciiImage from '../../img/man.jpeg';
 
-let image = () => {
-    let img = new imgToAscii('../../pngImg.jpg');
-    return img.display();
-}
 
 function ImageToAsciiContainer() {
-    return(
+    const [image, setImage] = useState('');
+
+    useEffect(() => {
+        const fetchImage = async () => {
+            try {
+                const asciiImageData =  await new imgToAscii(asciiImage, 0.1);
+                if (asciiImage) {
+                    setImage(asciiImageData.displayOnlyString());
+                }
+            } catch (err) {
+                console.log(err);
+            }
+        }
+        fetchImage()
+    }, []);
+
+    return (
         <div className="ascii-image-container">
-            {/* 
-                <img src={image2}></img> 
-            */}
-            
-            <img src={image2}></img>
+            <p>{image}</p>
         </div>
-    );
+    )
 }
 
 export default ImageToAsciiContainer;
