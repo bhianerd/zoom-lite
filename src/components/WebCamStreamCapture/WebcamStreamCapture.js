@@ -8,6 +8,7 @@ const WebcamStreamCapture = () => {
     const [recordedChunks, setRecordedChunks] = useState([]);
   
     const handleStartCaptureClick = useCallback(() => {
+      // webcamRef.current.ge
       setCapturing(true);
       mediaRecorderRef.current = new MediaRecorder(webcamRef.current.stream, {
         mimeType: "video/webm"
@@ -47,13 +48,14 @@ const WebcamStreamCapture = () => {
         a.click();
         window.URL.revokeObjectURL(url);
         setRecordedChunks([]);
+        console.log(recordedChunks);
       }
     }, [recordedChunks]);
   
     return (
       
       <>
-        <Webcam audio={false} ref={webcamRef} />
+        <Webcam audio={true} ref={webcamRef} />
         {capturing ? (
           <button onClick={handleStopCaptureClick}>Stop Capture</button>
         ) : (
