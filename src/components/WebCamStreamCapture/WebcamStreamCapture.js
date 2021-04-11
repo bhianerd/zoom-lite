@@ -1,14 +1,13 @@
-import { React } from "react";
+import { React, useRef, useState, useCallback } from "react";
 import Webcam from "react-webcam";
 
-
 const WebcamStreamCapture = () => {
-    const webcamRef = React.useRef(null);
-    const mediaRecorderRef = React.useRef(null);
-    const [capturing, setCapturing] = React.useState(false);
-    const [recordedChunks, setRecordedChunks] = React.useState([]);
+    const webcamRef = useRef(null);
+    const mediaRecorderRef = useRef(null);
+    const [capturing, setCapturing] = useState(false);
+    const [recordedChunks, setRecordedChunks] = useState([]);
   
-    const handleStartCaptureClick = React.useCallback(() => {
+    const handleStartCaptureClick = useCallback(() => {
       setCapturing(true);
       mediaRecorderRef.current = new MediaRecorder(webcamRef.current.stream, {
         mimeType: "video/webm"
@@ -20,7 +19,7 @@ const WebcamStreamCapture = () => {
       mediaRecorderRef.current.start();
     }, [webcamRef, setCapturing, mediaRecorderRef]);
   
-    const handleDataAvailable = React.useCallback(
+    const handleDataAvailable = useCallback(
       ({ data }) => {
         if (data.size > 0) {
           setRecordedChunks((prev) => prev.concat(data));
@@ -29,12 +28,12 @@ const WebcamStreamCapture = () => {
       [setRecordedChunks]
     );
   
-    const handleStopCaptureClick = React.useCallback(() => {
+    const handleStopCaptureClick = useCallback(() => {
       mediaRecorderRef.current.stop();
       setCapturing(false);
     }, [mediaRecorderRef, webcamRef, setCapturing]);
   
-    const handleDownload = React.useCallback(() => {
+    const handleDownload = useCallback(() => {
       if (recordedChunks.length) {
         const blob = new Blob(recordedChunks, {
           type: "video/webm"
@@ -52,6 +51,7 @@ const WebcamStreamCapture = () => {
     }, [recordedChunks]);
   
     return (
+      
       <>
         <Webcam audio={false} ref={webcamRef} />
         {capturing ? (
@@ -63,10 +63,12 @@ const WebcamStreamCapture = () => {
           <button onClick={handleDownload}>Download</button>
         )}
       </>
+      
     );
   };
   
-  ReactDOM.render(<WebcamStreamCapture />, document.getElementById("root"));
+  // ReactDOM.render(<WebcamStreamCapture />, document.getElementById("root"));
+  export default WebcamStreamCapture;
   
   // https://www.npmjs.com/package/react-webcam
   
