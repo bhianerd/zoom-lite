@@ -5,9 +5,13 @@ import WebcamStreamCapture from "../src/components/WebCamStreamCapture/WebcamStr
 function App() {
   return (
     <div className="App">
+      <div className="webcam">
         <Webcam />
-        <ImageToAsciiContainer />
+      </div>
+      <div className="imgtoAscii">
+        {/* <ImageToAsciiContainer /> */}
         <WebcamStreamCapture />
+      </div>
     </div>
   );
 }

@@ -1,72 +1,51 @@
 import { React, useRef, useState, useCallback } from "react";
 import Webcam from "react-webcam";
+import imgToAscii from "../../util/imgToAscii";
+import asciiImage from '../../img/man.jpeg';
+
+
+const videoConstraints = {
+  width: 240,
+  height: 135,
+};
 
 const WebcamStreamCapture = () => {
-    const webcamRef = useRef(null);
-    const mediaRecorderRef = useRef(null);
-    const [capturing, setCapturing] = useState(false);
-    const [recordedChunks, setRecordedChunks] = useState([]);
-  
-    const handleStartCaptureClick = useCallback(() => {
-      setCapturing(true);
-      mediaRecorderRef.current = new MediaRecorder(webcamRef.current.stream, {
-        mimeType: "video/webm"
-      });
-      mediaRecorderRef.current.addEventListener(
-        "dataavailable",
-        handleDataAvailable
-      );
-      mediaRecorderRef.current.start();
-    }, [webcamRef, setCapturing, mediaRecorderRef]);
-  
-    const handleDataAvailable = useCallback(
-      ({ data }) => {
-        if (data.size > 0) {
-          setRecordedChunks((prev) => prev.concat(data));
-        }
-      },
-      [setRecordedChunks]
-    );
-  
-    const handleStopCaptureClick = useCallback(() => {
-      mediaRecorderRef.current.stop();
-      setCapturing(false);
-    }, [mediaRecorderRef, webcamRef, setCapturing]);
-  
-    const handleDownload = useCallback(() => {
-      if (recordedChunks.length) {
-        const blob = new Blob(recordedChunks, {
-          type: "video/webm"
-        });
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement("a");
-        document.body.appendChild(a);
-        a.style = "display: none";
-        a.href = url;
-        a.download = "react-webcam-stream-capture.webm";
-        a.click();
-        window.URL.revokeObjectURL(url);
-        setRecordedChunks([]);
-      }
-    }, [recordedChunks]);
-  
-    return (
-      
-      <>
-        <Webcam audio={false} ref={webcamRef} />
-        {capturing ? (
-          <button onClick={handleStopCaptureClick}>Stop Capture</button>
-        ) : (
-          <button onClick={handleStartCaptureClick}>Start Capture</button>
-        )}
-        {recordedChunks.length > 0 && (
-          <button onClick={handleDownload}>Download</button>
-        )}
-      </>
-      
-    );
-  };
-  
+  const webcamRef = useRef(null);
+  const [screenShot, setScreenShot] = useState(null);
+
+  const capture = useCallback(
+    () => {
+      console.log(screenShot);
+
+
+      setInterval(async () => {
+          var image = new Image();
+          image.src = webcamRef.current.getScreenshot();
+          console.log(webcamRef.current.getScreenshot());
+          // console.log(webcamRef.current.getScreenshot());
+          const asciiImageData = new imgToAscii(webcamRef.current.getScreenshot(), 0.1);
+          await asciiImageData.displayOnlyString();
+
+        }, 100);
+    },
+    [screenShot]
+  );
+
+  return (
+    <>
+      <Webcam
+        audio={false}
+        height={720}
+        ref={webcamRef}
+        screenshotFormat="image/jpeg"
+        width={1280}
+        videoConstraints={videoConstraints}
+      />
+      <button onClick={capture}>Capture photo</button>
+    </>
+  );
+};
+
   // ReactDOM.render(<WebcamStreamCapture />, document.getElementById("root"));
   export default WebcamStreamCapture;
   
