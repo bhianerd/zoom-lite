@@ -5,8 +5,12 @@ import ImageToAsciiContainer from '../src/components/imageToAscii/imageToAsciiCo
 function App() {
   return (
     <div className="App">
+      <div className="webcam">
         <Webcam />
+      </div>
+      <div className="imgtoAscii">
         <ImageToAsciiContainer />
+      </div>
     </div>
   );
 }
