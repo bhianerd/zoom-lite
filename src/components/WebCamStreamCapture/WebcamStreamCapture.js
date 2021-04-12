@@ -1,8 +1,8 @@
 import { React, useRef, useState, useCallback } from "react";
 import Webcam from "react-webcam";
 import imgToAscii from "../../util/imgToAscii";
-import ImageToAsciiContainer from "../../components/ImageToAscii/ImageToAsciiContainer";
-
+import ImageToAsciiContainer from "../ImageToAscii/ImageToAsciiContainer";
+import PeerInitiator from '../PeerInitiator/PeerInitiator';
 const videoConstraints = {
   width: 240,
   height: 135,
@@ -12,11 +12,11 @@ const WebcamStreamCapture = () => {
   const webcamRef = useRef(null);
   const [image, setImage] = useState('');
   const [screenShot, setScreenShot] = useState(null);
+  PeerInitiator();
 
   const capture = useCallback(
     () => {
       console.log(screenShot);
-
 
       setInterval(async () => {
           var image = new Image();
