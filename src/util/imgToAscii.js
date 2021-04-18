@@ -72,18 +72,28 @@ class imgToAscii {
 	getPreElement() {
 		const pre = document.createElement('span');
 		pre.style.fontFamily = "Courier, monospace";
-		pre.style.lineHeight = "20px";
-		pre.style.fontSize = "20px";
+		pre.style.lineHeight = "4px";
+		pre.style.fontSize = "4px";
 		pre.style.display = "inline-block";
 		return pre
 	}
 
+	// edited function to display string
 	async displayOnlyString() {
 		await this.loadImage;
 		return this.string;
 	}
 
-	async display(appendToBody = true) {
+	// edited funciton to return string version of ascii
+	async displayStringColor(bg) {
+		const pre = this.getPreElement();
+		pre.style.backgroundColor = bg;
+		await this.loadImage;
+		pre.innerHTML = this.stringColor;
+		return pre.outerHTML;
+	}
+
+	async display(bg,appendToBody = true) {
 		const pre = this.getPreElement();
 		if (appendToBody)
 			this.parentNode.appendChild(pre);

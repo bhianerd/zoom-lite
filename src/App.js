@@ -1,12 +1,9 @@
 import './App.css';
-import Webcam from "react-webcam";
+import 'bootstrap/dist/css/bootstrap.min.css';
 import WebcamStreamCapture from "../src/components/WebCamStreamCapture/WebcamStreamCapture";
 function App() {
   return (
     <div className="App">
-      <div className="webcam">
-        <Webcam />
-      </div>
       <div className="imgtoAscii">
         <WebcamStreamCapture />
       </div>
